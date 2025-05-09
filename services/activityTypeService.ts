@@ -1,9 +1,9 @@
 import api from './api';
 
 export const getActivityTypes = () => {
-  return api.get('/activities/types'); 
+  return api.get('/activity-types'); 
 };
 
 export const getActivityType = ( id: number ) => {
-  return api.get(`/activities/types/${id}`); 
+  return api.get(`/activity-types/${id}`); 
 };
