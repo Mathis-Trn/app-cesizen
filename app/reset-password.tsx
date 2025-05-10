@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, Image } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { resetPasswordWithCode } from '../services/authService';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -24,49 +25,51 @@ export default function ResetPassword() {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
-      <Text style={styles.title}>Réinitialiser le mot de passe</Text>
-      <Text style={styles.text}>Saisissez le code reçu par email et choisissez un nouveau mot de passe.</Text>
+    <CenteredLayout>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
+        />
+        <Text style={styles.title}>Réinitialiser le mot de passe</Text>
+        <Text style={styles.text}>Saisissez le code reçu par email et choisissez un nouveau mot de passe.</Text>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Code reçu par email"
-        placeholderTextColor="#999"
-        value={code}
-        onChangeText={setCode}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nouveau mot de passe"
-        placeholderTextColor="#999"
-        secureTextEntry
-        value={newPassword}
-        onChangeText={setNewPassword}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Confirmer le mot de passe"
-        placeholderTextColor="#999"
-        secureTextEntry
-        value={confirm}
-        onChangeText={setConfirm}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Code reçu par email"
+          placeholderTextColor="#999"
+          value={code}
+          onChangeText={setCode}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Nouveau mot de passe"
+          placeholderTextColor="#999"
+          secureTextEntry
+          value={newPassword}
+          onChangeText={setNewPassword}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmer le mot de passe"
+          placeholderTextColor="#999"
+          secureTextEntry
+          value={confirm}
+          onChangeText={setConfirm}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Réinitialiser</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Réinitialiser</Text>
+        </TouchableOpacity>
+      </View>
+    </CenteredLayout>
   );
 }
 
@@ -75,7 +78,9 @@ const styles = StyleSheet.create({
     flex: 1, 
     padding: 20, 
     justifyContent: 'center', 
-    backgroundColor: '#fff' 
+    backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: 1200,
   },
   header: {
     backgroundColor: '#fff',

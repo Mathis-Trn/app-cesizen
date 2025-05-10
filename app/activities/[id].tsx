@@ -18,6 +18,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import { useAuth } from '../../context/AuthContext';
 import Constants from 'expo-constants';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function ActivityDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -81,61 +82,63 @@ export default function ActivityDetail() {
   if (!activity) return <Text style={styles.notFound}>Activité non trouvée</Text>;
 
   return (
-    <View style={{ flex: 1 }}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerRight: () => (
-            <TouchableOpacity style={styles.favoriteBtn} onPress={toggleFavorite}>
-              <Ionicons
-                name={isFavorite ? 'heart' : 'heart-outline'}
-                size={22}
-                color={isFavorite ? '#ff4444' : '#555'}
+    <CenteredLayout>
+      <View style={{ flex: 1 }}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
               />
-            </TouchableOpacity>
-          ),
-          headerStyle: styles.header,
-        }}
-      />
-      <ScrollView contentContainerStyle={styles.container}>
-        <TouchableOpacity onPress={() => router.replace('/activities')} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#333" />
-        </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <TouchableOpacity style={styles.favoriteBtn} onPress={toggleFavorite}>
+                <Ionicons
+                  name={isFavorite ? 'heart' : 'heart-outline'}
+                  size={22}
+                  color={isFavorite ? '#ff4444' : '#555'}
+                />
+              </TouchableOpacity>
+            ),
+            headerStyle: styles.header,
+          }}
+        />
+        <ScrollView contentContainerStyle={styles.container}>
+          <TouchableOpacity onPress={() => router.replace('/activities')} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
 
-        {activity.thumbnail && (
-          <Image source={{ uri: `${URL}${activity.thumbnail}` }} style={styles.image} />
-        )}
-        
-        <Text style={styles.title}>{activity.name}</Text>
+          {activity.thumbnail && (
+            <Image source={{ uri: `${URL}${activity.thumbnail}` }} style={styles.image} />
+          )}
+          
+          <Text style={styles.title}>{activity.name}</Text>
 
-        {activity.type.id && (
-          <Text style={styles.type}>Type : {activity.type.label}</Text>
-        )}
+          {activity.type.id && (
+            <Text style={styles.type}>Type : {activity.type.label}</Text>
+          )}
 
-        {activity.publicationDate && (
-          <Text style={styles.meta}>
-            📅 Publiée le {moment(activity.publicationDate).format('DD MMMM YYYY')}
-          </Text>
-        )}
+          {activity.publicationDate && (
+            <Text style={styles.meta}>
+              📅 Publiée le {moment(activity.publicationDate).format('DD MMMM YYYY')}
+            </Text>
+          )}
 
-        {activity.duration && (
-          <Text style={styles.meta}>⏱️ Durée : {activity.duration} min</Text>
-        )}
+          {activity.duration && (
+            <Text style={styles.meta}>⏱️ Durée : {activity.duration} min</Text>
+          )}
 
-        {activity.stressLevel && (
-          <Text style={styles.meta}>
-            🧘 Niveau de stress : {getStressLabel(activity.stressLevel)}
-          </Text>
-        )}
+          {activity.stressLevel && (
+            <Text style={styles.meta}>
+              🧘 Niveau de stress : {getStressLabel(activity.stressLevel)}
+            </Text>
+          )}
 
-        <Text style={styles.content}>{activity.description}</Text>
-      </ScrollView>
-    </View>
+          <Text style={styles.content}>{activity.description}</Text>
+        </ScrollView>
+      </View>
+    </CenteredLayout>
   );
 }
 
@@ -157,7 +160,11 @@ function getStressLabel(level: number) {
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
+  container: { 
+    padding: 20,
+    width: '100%',
+    maxWidth: 1200,
+  },
   backButton: {
     marginBottom: 16,
     flexDirection: 'row',

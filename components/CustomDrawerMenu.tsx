@@ -51,6 +51,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: 1200,
   },
   header: {
     padding: 18,
@@ -62,6 +64,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#28BF37',
     padding: 15,
     borderRadius: 8,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonEmpty: {
     backgroundColor: '#fff',
@@ -69,18 +73,24 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: '#28BF37',
+    maxWidth: 330,
+    width: '100%',
   },
   buttonFullText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
+    maxWidth: 330,
+    width: '100%',
   },
   buttonEmptyText: {
     color: '#28BF37',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
+    maxWidth: 330,
+    width: '100%',
   },
   footer: {
     borderTopColor: '#ccc',

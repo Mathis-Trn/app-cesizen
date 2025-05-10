@@ -1,10 +1,11 @@
 import { Stack, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { Dimensions, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Dimensions, View, Text, StyleSheet, TouchableOpacity, Linking } from 'react-native';
 import Animated , { interpolate, useAnimatedRef, useAnimatedStyle, useScrollViewOffset } from 'react-native-reanimated';
 import Slider from '../components/SliderCard';
 import { getLatestActivities } from '../services/activityService';
 import { getLatestPages } from '../services/informationService';
+import CenteredLayout from '@/components/CentredLayout';
 
 const { width } = Dimensions.get('window');
 const HEADER_HEIGHT = 190;
@@ -74,47 +75,52 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <View style={styles.container}>
-        <Stack.Screen
-          options={{
-            headerTitle: () => (
-              <Animated.Image
-                source={require('../assets/images/logo-cesizen.png')}
-                style={[styles.headerImage, headerImageAnimatedStyle]}
-              />
-            ),
-            headerTransparent: true,
-            headerBackground: () => <Animated.View style={[ styles.header, headerAnimatedStyle]}/>,
-          }}
-        />
-        <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} style={{width: '100%'}} >
-          <Animated.Image
-            source={require('../assets/images/background-header.png')}
-            style={ [styles.image, imageAnimatedStyle] }
+    <CenteredLayout>
+      <View style={styles.container}>
+          <Stack.Screen
+            options={{
+              headerTitle: () => (
+                <Animated.Image
+                  source={require('../assets/images/logo-cesizen.png')}
+                  style={[styles.headerImage, headerImageAnimatedStyle]}
+                />
+              ),
+              headerTransparent: true,
+              headerBackground: () => <Animated.View style={[ styles.header, headerAnimatedStyle]}/>,
+            }}
           />
+          <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16} style={{width: '100%'}} >
+            <Animated.Image
+              source={require('../assets/images/background-header.png')}
+              style={ [styles.image, imageAnimatedStyle] }
+            />
 
-          <View style={{ padding: 20, backgroundColor: '#fff', width: '100%' }}>
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={ styles.h1 }>Bienvenue sur CESI<Text style={{fontFamily: 'Kaushan'}}>ZEN </Text>!</Text>
+            <View style={{ padding: 20, backgroundColor: '#fff', width: '100%' }}>
+              <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={ styles.h1 }>Bienvenue sur CESI<Text style={{fontFamily: 'Kaushan'}}>ZEN </Text>!</Text>
+              </View>
+
+              <Slider count={5} title='Derniers Articles' fetchFn={getLatestPages} type="information"/>
+
+              <Slider count={5} title='Dernières Activités' fetchFn={getLatestActivities} type="activity"/>
+            
+              <View style={styles.textSection}>
+                <Text style={styles.h2}>Pourquoi CESI ZEN ?</Text>
+                <Text style={styles.text}>Dans un monde où les problématiques de santé mentale sont de plus en plus présentes, il est essentiel de fournir des outils accessibles et adaptés pour sensibiliser à ce sujet.</Text>
+                <Text style={styles.text}>Le projet <Text style={{fontWeight: 'bold',}}>CESIZEN</Text> s’inscrit dans cette démarche de sensibilisation et d’accompagnement des individus face aux troubles liés au stress et à la santé mentale.</Text>
+                <Text style={styles.text}>Parce qu'il est important d'en parler, nous mettons a votre disposition des articles d'informations ainsi que des activités, vous pouvez également <Text style={{fontWeight: "bold"}}>demander de l'aide</Text> en cliquant sur le bouton ci-dessous.</Text>
+              </View>
+
+              <View style={{ width: '100%', display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                <TouchableOpacity onPress={() => Linking.openURL("tel:3114")} style={ styles.buttonFull }>
+                  <Text style={ styles.buttonFullText }>J'ai besoin d'aide</Text>
+                </TouchableOpacity>
+              </View>
+              
             </View>
-
-            <Slider count={5} title='Derniers Articles' fetchFn={getLatestPages} type="information"/>
-
-            <Slider count={5} title='Dernières Activités' fetchFn={getLatestActivities} type="activity"/>
-          
-            <View style={styles.textSection}>
-              <Text style={styles.h2}>Pourquoi CESI ZEN ?</Text>
-              <Text style={styles.text}>Dans un monde où les problématiques de santé mentale sont de plus en plus présentes, il est essentiel de fournir des outils accessibles et adaptés pour sensibiliser à ce sujet.</Text>
-              <Text style={styles.text}>Le projet <Text style={{fontWeight: 'bold',}}>CESIZEN</Text> s’inscrit dans cette démarche de sensibilisation et d’accompagnement des individus face aux troubles liés au stress et à la santé mentale.</Text>
-              <Text style={styles.text}>Parce qu'il est important d'en parler, nous mettons a votre disposition des articles d'informations ainsi que des activités, vous pouvez également <Text style={{fontWeight: "bold"}}>demander de l'aide</Text> en cliquant sur le bouton ci-dessous.</Text>
-            </View>
-
-            <TouchableOpacity onPress={() => router.push("/")} style={ styles.buttonFull }>
-                <Text style={ styles.buttonFullText }>J'ai besoin d'aide</Text>
-            </TouchableOpacity>
-          </View>
-        </Animated.ScrollView>
-    </View>
+          </Animated.ScrollView>
+      </View>
+    </CenteredLayout>
   );
 }
 
@@ -124,6 +130,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     width: '100%',
+    maxWidth: 1200,
   },
   innerContent: {
     paddingTop: 0,
@@ -168,6 +175,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#28BF37',
     padding: 15,
     borderRadius: 8,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonEmpty: {
       backgroundColor: '#fff',
@@ -175,17 +184,21 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       borderWidth: 1,
       borderColor: '#28BF37',
+      maxWidth: 330,
+      width: '100%',
   },
   buttonFullText: {
       color: '#fff',
       textAlign: 'center',
       fontSize: 16,
       fontWeight: 'bold',
+      maxWidth: 300,
   },
   buttonEmptyText: {
       color: '#28BF37',
       textAlign: 'center',
       fontSize: 16,
       fontWeight: 'bold',
+      maxWidth: 330,
   },
 });
