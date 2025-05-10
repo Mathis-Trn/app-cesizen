@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ActivityInd
 import { getProfil, updateProfil } from '../services/profilService';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function EditProfile() {
   const router = useRouter();
@@ -40,49 +41,51 @@ export default function EditProfile() {
   if (loading) return <ActivityIndicator style={{ marginTop: 50 }} />;
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
+    <CenteredLayout>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
+        />
 
-      <View style={styles.topSection}>
-        <TouchableOpacity onPress={() => router.push("/profile")} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#333" />
+        <View style={styles.topSection}>
+          <TouchableOpacity onPress={() => router.push("/profile")} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.title}>Modifier le profil</Text>
+
+        <Text style={styles.label}>Nom</Text>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          style={styles.input}
+          placeholderTextColor="#999"
+          placeholder="Votre nom"
+        />
+
+        <Text style={styles.label}>Email</Text>
+        <TextInput
+          value={profile?.email}
+          editable={false}
+          style={styles.input}
+          placeholderTextColor="#999"
+          placeholder="Votre email"
+        />
+
+        <TouchableOpacity onPress={handleSubmit} style={styles.buttonFull}>
+          <Text style={styles.buttonFullText}>Enregistrer</Text>
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.title}>Modifier le profil</Text>
-
-      <Text style={styles.label}>Nom</Text>
-      <TextInput
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
-        placeholderTextColor="#999"
-        placeholder="Votre nom"
-      />
-
-      <Text style={styles.label}>Email</Text>
-      <TextInput
-        value={profile?.email}
-        editable={false}
-        style={styles.input}
-        placeholderTextColor="#999"
-        placeholder="Votre email"
-      />
-
-      <TouchableOpacity onPress={handleSubmit} style={styles.buttonFull}>
-        <Text style={styles.buttonFullText}>Enregistrer</Text>
-      </TouchableOpacity>
-    </View>
+    </CenteredLayout>
   );
 }
 
@@ -91,6 +94,8 @@ const styles = StyleSheet.create({
     flex: 1, 
     backgroundColor: '#fff', 
     padding: 20,
+    width: '100%',
+    maxWidth: 1200,
   },
   header: {
     backgroundColor: '#fff',
@@ -130,11 +135,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#28BF37',
     padding: 15,
     borderRadius: 8,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonFullText: {
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+    maxWidth: 330,
+    width: '100%',
   },
 });

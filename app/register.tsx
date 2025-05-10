@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, Image } from 'react-native';
 import { register } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function Register() {
   const { loginSuccess } = useAuth();
@@ -23,60 +24,62 @@ export default function Register() {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={styles.title}>Inscription</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Nom"
-          placeholderTextColor="#999"
-          value={name}
-          onChangeText={setName}
+    <CenteredLayout>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirmer le mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-        />
-        <TouchableOpacity style={styles.buttonEmpty} onPress={handleRegister}>
-          <Text style={{ color: '#28BF37', fontWeight: 'bold' }}>S'inscrire</Text>
-        </TouchableOpacity>
-        <Text style={styles.link} onPress={() => router.push('./login')}>
-          Déjà inscrit ? Se connecter
-        </Text>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={styles.title}>Inscription</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Nom"
+            placeholderTextColor="#999"
+            value={name}
+            onChangeText={setName}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#999"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirmer le mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+          />
+          <TouchableOpacity style={styles.buttonEmpty} onPress={handleRegister}>
+            <Text style={{ color: '#28BF37', fontWeight: 'bold' }}>S'inscrire</Text>
+          </TouchableOpacity>
+          <Text style={styles.link} onPress={() => router.push('./login')}>
+            Déjà inscrit ? Se connecter
+          </Text>
+        </View>
       </View>
-    </View>
+    </CenteredLayout>
   );
 }
 
@@ -86,6 +89,8 @@ const styles = StyleSheet.create({
       padding: 20,
       justifyContent: 'center',
       backgroundColor: '#fff',
+      width: '100%',
+      maxWidth: 1200,
     },
     header: {
       backgroundColor: '#fff',
@@ -121,12 +126,16 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#28BF37',
+        maxWidth: 330,
+        width: '100%',
     },
     buttonEmptyText: {
         color: '#28BF37',
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
+        maxWidth: 330,
+        width: '100%',
     },
   });
   

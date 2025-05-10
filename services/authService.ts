@@ -1,15 +1,41 @@
 import api from './api';
 import * as SecureStore from 'expo-secure-store';
-import {jwtDecode} from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
+import { Platform } from 'react-native';
 
 const TOKEN_KEY = 'authToken';
+const isWeb = Platform.OS === 'web';
+
+const Storage = {
+  getItem: async (key: string) => {
+    if (isWeb) {
+      return localStorage.getItem(key);
+    } else {
+      return await SecureStore.getItemAsync(key);
+    }
+  },
+  setItem: async (key: string, value: string) => {
+    if (isWeb) {
+      localStorage.setItem(key, value);
+    } else {
+      await SecureStore.setItemAsync(key, value);
+    }
+  },
+  deleteItem: async (key: string) => {
+    if (isWeb) {
+      localStorage.removeItem(key);
+    } else {
+      await SecureStore.deleteItemAsync(key);
+    }
+  },
+};
 
 export const login = async (email: string, password: string) => {
   const response = await api.post('/auth/login', { email, password });
   const token = response.data.access_token;
 
   if (token) {
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
+    await Storage.setItem(TOKEN_KEY, token);
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
 
@@ -21,7 +47,7 @@ export const register = async (userData: any) => {
   const token = response.data.token;
 
   if (token) {
-    await SecureStore.setItemAsync(TOKEN_KEY, token);
+    await Storage.setItem(TOKEN_KEY, token);
     api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   }
 
@@ -29,8 +55,7 @@ export const register = async (userData: any) => {
 };
 
 export const getToken = async () => {
-  const token = await SecureStore.getItemAsync(TOKEN_KEY);
-  return token;
+  return await Storage.getItem(TOKEN_KEY);
 };
 
 export const isTokenValid = async () => {
@@ -47,7 +72,7 @@ export const isTokenValid = async () => {
 };
 
 export const logout = async () => {
-  await SecureStore.deleteItemAsync(TOKEN_KEY);
+  await Storage.deleteItem(TOKEN_KEY);
   delete api.defaults.headers.common['Authorization'];
 };
 

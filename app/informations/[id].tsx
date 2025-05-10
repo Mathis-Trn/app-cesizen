@@ -5,6 +5,7 @@ import { getPageById } from '../../services/informationService';
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Constants from 'expo-constants';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function InformationDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -26,42 +27,48 @@ export default function InformationDetail() {
   if (!data) return <Text style={styles.notFound}>Information non trouvée</Text>;
 
   return (
-    <View style={{ flex: 1 }}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
+    <CenteredLayout>
+      <View style={{ flex: 1 }}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
+        />
 
-      <ScrollView contentContainerStyle={styles.container}>
-        
-        <TouchableOpacity onPress={() => router.replace('/informations')} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="#333" />
-        </TouchableOpacity>
+        <ScrollView contentContainerStyle={styles.container}>
+          
+          <TouchableOpacity onPress={() => router.replace('/informations')} style={styles.backButton}>
+              <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
 
-        {data.thumbnail && (
-          <Image source={{ uri: `${URL}${data.thumbnail}` }} style={styles.image} />
-        )}
-        <Text style={styles.title}>{data.title}</Text>
-        <Text style={styles.content}>{data.content}</Text>
-      </ScrollView>
-    </View>
+          {data.thumbnail && (
+            <Image source={{ uri: `${URL}${data.thumbnail}` }} style={styles.image} />
+          )}
+          <Text style={styles.title}>{data.title}</Text>
+          <Text style={styles.content}>{data.content}</Text>
+        </ScrollView>
+      </View>
+    </CenteredLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20 },
+  container: { 
+    padding: 20,
+    width: '100%',
+    maxWidth: 1200,
+  },
   image: {
     width: '100%',
     height: 200,
     marginBottom: 16,
-    borderRadius: 8,
+    borderRadius: 8
   },
   header: {
     backgroundColor: '#fff',

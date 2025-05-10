@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { login } from '../services/authService';
 import { useAuth } from '../context/AuthContext';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function Login() {
   const router = useRouter();
@@ -30,49 +31,51 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
-      <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={styles.title}>Connexion</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#999"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          value={email}
-          onChangeText={setEmail}
+    <CenteredLayout>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Mot de passe"
-          placeholderTextColor="#999"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity onPress={handleLogin} style={styles.buttonFull}>
-          <Text style={styles.buttonFullText}>Se connecter</Text>
-        </TouchableOpacity>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={styles.title}>Connexion</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#999"
+            autoCapitalize="none"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Mot de passe"
+            placeholderTextColor="#999"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity onPress={handleLogin} style={styles.buttonFull}>
+            <Text style={styles.buttonFullText}>Se connecter</Text>
+          </TouchableOpacity>
 
-        <Text style={styles.link} onPress={() => router.push('/forgot-password')}>
-          Mot de passe oublié ?
-        </Text>
-        <Text style={styles.link} onPress={() => router.push('/register')}>
-          Pas encore de compte ? S'inscrire
-        </Text>
+          <Text style={styles.link} onPress={() => router.push('/forgot-password')}>
+            Mot de passe oublié ?
+          </Text>
+          <Text style={styles.link} onPress={() => router.push('/register')}>
+            Pas encore de compte ? S'inscrire
+          </Text>
+        </View>
       </View>
-    </View>
+    </CenteredLayout>
   );
 }
 
@@ -82,6 +85,8 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     backgroundColor: '#fff',
+    width: '100%',
+    maxWidth: 1200,
   },
   header: {
     backgroundColor: '#fff',
@@ -115,11 +120,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#28BF37',
     padding: 15,
     borderRadius: 8,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonFullText: {
     color: '#fff',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
+    maxWidth: 330,
+    width: '100%',
   },
 });

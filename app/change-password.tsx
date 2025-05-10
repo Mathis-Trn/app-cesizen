@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Image } fro
 import { changePassword } from '../services/profilService';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import CenteredLayout from '@/components/CentredLayout';
 
 export default function ChangePassword() {
   const router = useRouter();
@@ -26,66 +27,74 @@ export default function ChangePassword() {
   };
 
   return (
-    <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          headerTitle: () => (
-            <Image
-              source={require('../assets/images/logo-cesizen.png')}
-              style={styles.headerImage}
-            />
-          ),
-          headerStyle: styles.header,
-        }}
-      />
+    <CenteredLayout>
+      <View style={styles.container}>
+        <Stack.Screen
+          options={{
+            headerTitle: () => (
+              <Image
+                source={require('../assets/images/logo-cesizen.png')}
+                style={styles.headerImage}
+              />
+            ),
+            headerStyle: styles.header,
+          }}
+        />
 
-      <View style={styles.topSection}>
-        <TouchableOpacity onPress={() => router.push("/profile")} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#333" />
+        <View style={styles.topSection}>
+          <TouchableOpacity onPress={() => router.push("/profile")} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={24} color="#333" />
+          </TouchableOpacity>
+        </View>
+
+        <Text style={styles.h1}>Changer le mot de passe</Text>
+
+        <Text style={styles.label}>Mot de passe actuel</Text>
+        <TextInput
+          value={oldPassword}
+          onChangeText={setOldPassword}
+          secureTextEntry
+          placeholderTextColor="#999"
+          style={styles.input}
+          placeholder="Mot de passe actuel"
+        />
+
+        <Text style={styles.label}>Nouveau mot de passe</Text>
+        <TextInput
+          value={newPassword}
+          onChangeText={setNewPassword}
+          secureTextEntry
+          placeholderTextColor="#999"
+          style={styles.input}
+          placeholder="Nouveau mot de passe"
+        />
+
+        <Text style={styles.label}>Confirmer le mot de passe</Text>
+        <TextInput
+          value={confirm}
+          onChangeText={setConfirm}
+          secureTextEntry
+          placeholderTextColor="#999"
+          style={styles.input}
+          placeholder="Confirmez le mot de passe"
+        />
+
+        <TouchableOpacity onPress={handleChange} style={styles.buttonFull}>
+          <Text style={styles.buttonFullText}>Enregistrer</Text>
         </TouchableOpacity>
       </View>
-
-      <Text style={styles.h1}>Changer le mot de passe</Text>
-
-      <Text style={styles.label}>Mot de passe actuel</Text>
-      <TextInput
-        value={oldPassword}
-        onChangeText={setOldPassword}
-        secureTextEntry
-        placeholderTextColor="#999"
-        style={styles.input}
-        placeholder="Mot de passe actuel"
-      />
-
-      <Text style={styles.label}>Nouveau mot de passe</Text>
-      <TextInput
-        value={newPassword}
-        onChangeText={setNewPassword}
-        secureTextEntry
-        placeholderTextColor="#999"
-        style={styles.input}
-        placeholder="Nouveau mot de passe"
-      />
-
-      <Text style={styles.label}>Confirmer le mot de passe</Text>
-      <TextInput
-        value={confirm}
-        onChangeText={setConfirm}
-        secureTextEntry
-        placeholderTextColor="#999"
-        style={styles.input}
-        placeholder="Confirmez le mot de passe"
-      />
-
-      <TouchableOpacity onPress={handleChange} style={styles.buttonFull}>
-        <Text style={styles.buttonFullText}>Enregistrer</Text>
-      </TouchableOpacity>
-    </View>
+    </CenteredLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', padding: 20 },
+  container: { 
+    flex: 1, 
+    backgroundColor: 
+    '#fff', 
+    padding: 20,
+    width: '100%',
+    maxWidth: 1200, },
   header: {
     backgroundColor: '#fff',
     height: 70,
@@ -124,11 +133,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#28BF37',
     padding: 15,
     borderRadius: 8,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonFullText: {
     color: '#fff',
     textAlign: 'center',
     fontWeight: 'bold',
     fontSize: 16,
+    maxWidth: 330,
+    width: '100%',
   },
 });
