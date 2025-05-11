@@ -44,7 +44,7 @@ export default function Login() {
             headerStyle: styles.header,
           }}
         />
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', width: 330 }}>
           <Text style={styles.title}>Connexion</Text>
           <TextInput
             style={styles.input}
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#fff',
     width: '100%',
@@ -103,6 +104,8 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: 'center',
     fontWeight: 'bold',
+    maxWidth: 330,
+    width: '100%',
   },
   input: {
     borderColor: '#ccc',
@@ -110,6 +113,8 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     padding: 10,
     marginBottom: 12,
+    maxWidth: 330,
+    width: '100%',
   },
   link: {
     marginTop: 12,
