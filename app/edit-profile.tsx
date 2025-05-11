@@ -61,29 +61,36 @@ export default function EditProfile() {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.title}>Modifier le profil</Text>
+        <View style={{ flex: 1, alignItems: 'center', maxWidth: 1200, width: '100%' }}>
+          <Text style={styles.title}>Modifier le profil</Text>
 
-        <Text style={styles.label}>Nom</Text>
-        <TextInput
-          value={name}
-          onChangeText={setName}
-          style={styles.input}
-          placeholderTextColor="#999"
-          placeholder="Votre nom"
-        />
-
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          value={profile?.email}
-          editable={false}
-          style={styles.input}
-          placeholderTextColor="#999"
-          placeholder="Votre email"
-        />
-
-        <TouchableOpacity onPress={handleSubmit} style={styles.buttonFull}>
-          <Text style={styles.buttonFullText}>Enregistrer</Text>
-        </TouchableOpacity>
+          <>
+            <Text style={styles.label}>Nom</Text>
+            <TextInput
+              value={name}
+              onChangeText={setName}
+              style={styles.input}
+              placeholderTextColor="#999"
+              placeholder="Votre nom"
+            />
+          </>
+          
+          <>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              value={profile?.email}
+              editable={false}
+              style={styles.input}
+              placeholderTextColor="#999"
+              placeholder="Votre email"
+            />
+          </>
+          
+          <TouchableOpacity onPress={handleSubmit} style={styles.buttonFull}>
+            <Text style={styles.buttonFullText}>Enregistrer</Text>
+          </TouchableOpacity>
+        </View>
+        
       </View>
     </CenteredLayout>
   );
@@ -130,6 +137,8 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     marginBottom: 20,
+    maxWidth: 330,
+    width: '100%',
   },
   buttonFull: {
     backgroundColor: '#28BF37',
